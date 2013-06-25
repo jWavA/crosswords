@@ -1,0 +1,7 @@
+
+public class Trie { //prefix trie for storing dictionary
+	Trie[] subtries;
+	public Trie() {
+		
+	}
+}

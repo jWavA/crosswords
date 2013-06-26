@@ -84,8 +84,8 @@ public class Trie { // prefix trie for storing dictionary
 			// with the correct
 			// height.
 
-			//System.out.println(word);
-			//System.out.println("index: " + index);
+			System.out.println(word);
+			System.out.println(index);
 
 			
 			if (t == -1) {
@@ -99,7 +99,7 @@ public class Trie { // prefix trie for storing dictionary
 				if (currentheight == -1) {
 					return null;
 					}
-				word = word.substring(0, currentheight);
+				word = word.substring(0, currentheight-1);
 
 				root = root.parent;
 
@@ -118,11 +118,12 @@ public class Trie { // prefix trie for storing dictionary
 					return word;
 				} else {
 
-					word = word.substring(0, currentheight-1); // delete the
+					word = word.substring(0, currentheight -1); // delete the
 																	// last
 																	// letter
 																	// given
-			
+					if (root.parent == null)
+						return null;
 					root = root.parent;// move up one
 					currentheight--;
 					indexes[currentheight]++; // move the index one over
@@ -164,39 +165,23 @@ public class Trie { // prefix trie for storing dictionary
 	public static void main(String[] args) { // testing function- will delete
 												// later
 		Trie t = new Trie();
-		t.insert("helloa");
-		t.insert("hellob");
-		t.insert("orange");
+		//t.insert("helloa");
+		//t.insert("hellob");
+		//t.insert("orange");
 
-		t.insert("apples");
+		//t.insert("apples");
 
 		t.insert("melons");
-		t.insert("carnegie");
+		//t.insert("carnge");
 
 		t.insert("mellon");
 
-		t.insert("dragon");
-	    //System.out.println(t.search("melons"));
-		
-		//System.out.println("hello".substring(0,5));
+		//t.insert("dragon");
+		System.out.println(t.search("melons"));
+
 		t.updateHeights();
 		System.out.println("*" + t.findWord(6));
 		System.out.println("*" + t.findWord(6));
-
-		System.out.println("*" + t.findWord(6));
-
-		System.out.println("*" + t.findWord(6));
-		System.out.println("*" + t.findWord(8));
-
-		System.out.println("*" + t.findWord(6));
-
-		System.out.println("*" + t.findWord(6));
-
-		System.out.println("*" + t.findWord(6));
-		System.out.println("*" + t.findWord(6));
-
-
-
 
 		
 

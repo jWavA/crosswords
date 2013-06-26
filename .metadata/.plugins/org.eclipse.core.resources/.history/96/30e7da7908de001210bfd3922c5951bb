@@ -171,7 +171,7 @@ public class Trie { // prefix trie for storing dictionary
 		t.insert("apples");
 
 		t.insert("melons");
-		t.insert("carnegie");
+		t.insert("carnge");
 
 		t.insert("mellon");
 
@@ -182,16 +182,15 @@ public class Trie { // prefix trie for storing dictionary
 		t.updateHeights();
 		System.out.println("*" + t.findWord(6));
 		System.out.println("*" + t.findWord(6));
-
 		System.out.println("*" + t.findWord(6));
-
-		System.out.println("*" + t.findWord(6));
-		System.out.println("*" + t.findWord(8));
 
 		System.out.println("*" + t.findWord(6));
 
 		System.out.println("*" + t.findWord(6));
 
+		System.out.println("*" + t.findWord(6));
+
+		System.out.println("*" + t.findWord(6));
 		System.out.println("*" + t.findWord(6));
 		System.out.println("*" + t.findWord(6));
 

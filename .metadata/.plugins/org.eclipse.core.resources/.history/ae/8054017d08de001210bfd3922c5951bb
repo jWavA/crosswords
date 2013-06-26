@@ -186,11 +186,11 @@ public class Trie { // prefix trie for storing dictionary
 		System.out.println("*" + t.findWord(6));
 
 		System.out.println("*" + t.findWord(6));
+
+		System.out.println("*" + t.findWord(6));
+
+		System.out.println("*" + t.findWord(6));
 		System.out.println("*" + t.findWord(8));
-
-		System.out.println("*" + t.findWord(6));
-
-		System.out.println("*" + t.findWord(6));
 
 		System.out.println("*" + t.findWord(6));
 		System.out.println("*" + t.findWord(6));

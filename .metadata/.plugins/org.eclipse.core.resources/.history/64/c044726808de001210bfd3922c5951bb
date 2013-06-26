@@ -68,6 +68,7 @@ public class Trie { // prefix trie for storing dictionary
 
 	public String findWord(int length) {// finds the first word of length
 										// length, returns null otherwise
+		System.out.println("finding length "+ length +" word");
 		String word = "";
 		int[] indexes = new int[height + 1];
 		for (int x = 0; x < height; x++) {
@@ -171,7 +172,7 @@ public class Trie { // prefix trie for storing dictionary
 		t.insert("apples");
 
 		t.insert("melons");
-		t.insert("carnegie");
+		t.insert("carnge");
 
 		t.insert("mellon");
 
@@ -182,16 +183,15 @@ public class Trie { // prefix trie for storing dictionary
 		t.updateHeights();
 		System.out.println("*" + t.findWord(6));
 		System.out.println("*" + t.findWord(6));
-
 		System.out.println("*" + t.findWord(6));
-
-		System.out.println("*" + t.findWord(6));
-		System.out.println("*" + t.findWord(8));
 
 		System.out.println("*" + t.findWord(6));
 
 		System.out.println("*" + t.findWord(6));
 
+		System.out.println("*" + t.findWord(6));
+
+		System.out.println("*" + t.findWord(6));
 		System.out.println("*" + t.findWord(6));
 		System.out.println("*" + t.findWord(6));
 

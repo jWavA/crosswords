@@ -1,6 +1,0 @@
-
-public class Trie { //prefix trie for storing dictionary
-	public Trie() {
-		
-	}
-}

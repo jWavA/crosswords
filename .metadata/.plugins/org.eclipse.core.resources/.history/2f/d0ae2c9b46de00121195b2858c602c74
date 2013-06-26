@@ -1,0 +1,9 @@
+
+public class Word {// a word in the crossword 
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

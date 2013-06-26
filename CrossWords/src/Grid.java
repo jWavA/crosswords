@@ -1,11 +1,15 @@
+import java.util.ArrayList;
+
 public class Grid { // defines a 2 dimensional grid as the area in which we will
 					// work. Assume square grids for simplicity's sake
 	Character[][] grid; // two dimensional grid we will be using.
 	int length; // lengthxlength grid
+	ArrayList<Word> puzzle; //the words in the puzzle
 
 	public Grid(int length) { // creates an empty grid.
 		this.length = length;
 		grid = new Character[length][length];
+		puzzle = new ArrayList<Word>();
 
 	}
 

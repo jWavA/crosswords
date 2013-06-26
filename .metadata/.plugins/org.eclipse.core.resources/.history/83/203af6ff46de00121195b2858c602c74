@@ -1,0 +1,16 @@
+public class Word {// a word in the crossword
+	String word;
+
+	enum direction {
+		ACROSS, DOWN
+	}
+	
+	int row, column; //the location of the word
+	int clue; //the corresponding clue number
+	
+	public Word(String word, int direction,int row, int column, int clue ) { //direction 1 = across, 2 = down
+		direction = direction==1 ? ACROSS: DOWN;
+		
+	} 
+
+}

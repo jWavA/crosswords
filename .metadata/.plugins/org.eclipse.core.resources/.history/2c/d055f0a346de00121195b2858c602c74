@@ -1,0 +1,7 @@
+
+public class Word {// a word in the crossword 
+	String word;
+	enum direction {
+		
+	}
+}

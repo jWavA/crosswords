@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class Main2 {
+public class Main2 { //for testing
 
 	/**
 	 * @param args
@@ -41,23 +41,26 @@ public class Main2 {
 				inputStream.close();
 			}
 		}
-		System.out.println("Loaded " + words + " words into the dictionary.");
-		//System.out.println("Updating heights...");
-		int length = 6;
-		int lengthwords = 0;
-		System.out.println("Finding "  + length + " letter words");
+		Wordlist list = new Wordlist(wordlist);
+
 		
-		for(int x = 0; x< wordlist.length; x++) {
-			if(wordlist[x].length() == length) {
-				lengthwords++;
-			}
-		}
+		System.out.println(list.nextWord(2));
+		System.out.println(list.nextWord(2));
+
+		System.out.println(list.nextWord(2));
+
+		System.out.println(list.nextWord(2));
+
+		System.out.println(list.nextWord(2));
+		System.out.println(list.nextWord(25));
+		System.out.println(list.nextWord(26));
+
+
 		
-		System.out.println("Total " +  length  + " letter words in dictionary: "  + lengthwords);
 			
 	}
 	
-	private Grid solve(String[] wordlist, Grid grid) {
+	private Grid solve(Wordlist wordlist, Grid grid) {
 		return null;
 	}
 

@@ -1,0 +1,53 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class Main {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) throws IOException {
+		BufferedReader inputStream = null;
+		int words = 0;
+		Trie t = new Trie();
+		
+		String currentword = "";
+		try {
+			
+			inputStream = new BufferedReader(new FileReader("scrabble.txt"));
+			int c;
+			while ((c = inputStream.read()) != -1) {
+				if(c == ' ' || c == '\n') {//if its a space
+					t.insert(currentword);
+					words++;
+					//System.out.println(currentword);
+					currentword = "";
+
+				}
+				else {
+					currentword += (char) c + "";
+				}
+			}
+		}
+
+		finally {
+			if (inputStream != null) {
+				inputStream.close();
+			}
+		}
+		System.out.println("Updating heights...");
+		t.updateHeights();
+		System.out.println("Finding 6 letter words");
+		String x;
+		int length = 15;
+		while((x= t.findWord(length))!= null) {
+			System.out.println(x);
+		}
+		
+		System.out.println("Total words in dictionary: "+ words);
+		System.out.println("Total " +  length  + " letter words in dictionary:"  + lengthwords);
+			
+	}
+
+}

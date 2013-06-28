@@ -1,4 +1,0 @@
-
-public class Grid { //defines a 2 dimensional grid as the area in which we will work
-	Character [][] grid;
-}

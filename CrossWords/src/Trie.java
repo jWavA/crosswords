@@ -154,6 +154,7 @@ public class Trie { // prefix trie for storing dictionary
 		s = s.toUpperCase();
 		Trie root = this;
 		for (int x = 0; x < s.length(); x++) {
+			if(s.charAt(x) == '?') return false;
 			if (root.subtries[s.charAt(x) - 'A'] == null) {
 				return false;
 			}

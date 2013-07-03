@@ -87,9 +87,9 @@ public class Main2 { // for testing
 							try {
 
 								Grid solution = solve(grid, 2); //
-								while (solution == null) { //if it can't find a solution to the last grid
+								while (solution == null) { //if it cant find a solution to the last grid
 									grid.deleteLastWord();
-									solution = solve(grid, 1);  //delete the last word and redo this last solve.
+									solution = solve(grid, 2); 
 
 								}
 								return solution;

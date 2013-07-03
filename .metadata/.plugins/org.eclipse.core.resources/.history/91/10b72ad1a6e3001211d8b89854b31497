@@ -66,7 +66,7 @@ public class Main2 { // for testing
 		// 1 for across, 2 for down. Alternates between the two directions so
 		// that it does 1 across, 1 down, 2 across, 2 down, etc.
 
-		if (direction == 1) { // across
+		if (direction == 1) {
 
 			while (!isSolved(grid)) {
 				for (Word word : grid.across) {
@@ -82,14 +82,17 @@ public class Main2 { // for testing
 
 						} else {
 
+							System.out.println(findword);
+							System.out.println(word.row);
+							System.out.println(word.column);
 							grid.insertStringAcross(word.row, word.column,
 									findword);
 							try {
 
-								Grid solution = solve(grid, 2); //
-								while (solution == null) { //if it can't find a solution to the last grid
+								Grid solution = solve(grid, 2);
+								while (solution == null) {
 									grid.deleteLastWord();
-									solution = solve(grid, 1);  //delete the last word and redo this last solve.
+									solution = solve(grid, 1);
 
 								}
 								return solution;

@@ -46,8 +46,8 @@ public class Main2 { // for testing
 
 		list = new Wordlist(wordlist);
 		Grid grid = new Grid(12);
-		for (int x = 0; x < 20; x++) {
-			grid.makeBlack((int) Math.random() * 120, (int) Math.random() * 120);
+		for(int x = 0; x < 20; x++) {
+			grid.makeBlack((int)Math.random() * 120, (int)Math.random() * 120);
 		}
 		grid.startGrid();
 
@@ -55,18 +55,21 @@ public class Main2 { // for testing
 		System.out.println("---------------");
 
 		grid.printGrid();
-		for (Word w : grid.down) {
+		for(Word w: grid.down) {
 			System.out.println(w.word);
 		}
 		System.out.println(isSolved(grid));
-
+		
 	}
 
-	private static Grid solve(Grid grid, int direction) {
-		// 1 for across, 2 for down. Alternates between the two directions so
-		// that it does 1 across, 1 down, 2 across, 2 down, etc.
-
-		if (direction == 1) { // across
+	private static Grid solve(Grid grid, int direction) { // 1 for
+																		// across,
+																		// 2
+		// for down. Alternates between the two directions so that it does 1
+		// across, 1 down, 2 across, 2 down, etc.
+		System.out.println("---------------");
+		grid.printGrid();
+		if (direction == 1) {
 
 			while (!isSolved(grid)) {
 				for (Word word : grid.across) {
@@ -76,20 +79,23 @@ public class Main2 { // for testing
 					} else {
 
 						String findword = list.findWord(word.word);
-
+						
 						if (findword == null) {
 							return null;
 
 						} else {
 
+							System.out.println(findword);
+							System.out.println(word.row);
+							System.out.println(word.column);
 							grid.insertStringAcross(word.row, word.column,
 									findword);
 							try {
 
-								Grid solution = solve(grid, 2); //
-								while (solution == null) { //if it can't find a solution to the last grid
+								Grid solution = solve(grid, 2);
+								while (solution == null) {
 									grid.deleteLastWord();
-									solution = solve(grid, 1);  //delete the last word and redo this last solve.
+									solution= solve(grid, 1);
 
 								}
 								return solution;
@@ -113,7 +119,7 @@ public class Main2 { // for testing
 						continue;
 					} else {
 						String findword = list.findWord(word.word);
-
+						
 						if (findword == null) {
 							return null;
 						} else {
@@ -123,7 +129,7 @@ public class Main2 { // for testing
 								Grid solution = solve(grid, 1);
 								while (solution == null) {
 									grid.deleteLastWord();
-									solution = solve(grid, 1);
+									solution= solve(grid, 1);
 								}
 								return solution;
 							} catch (Exception e) {
@@ -145,7 +151,7 @@ public class Main2 { // for testing
 	public static boolean isSolved(Grid grid) { // checks if every word is
 												// solved
 		for (Word word : grid.across) {
-
+			
 			if (!dictionary.search(word.word)) {
 				return false;
 			}

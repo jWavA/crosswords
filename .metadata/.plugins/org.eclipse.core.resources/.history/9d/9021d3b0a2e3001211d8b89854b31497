@@ -1,0 +1,195 @@
+import java.util.ArrayList;
+
+public class Grid { // defines a 2 dimensional grid as the area in which we will
+					// work. Assume square grids for simplicity's sake
+	Character[][] grid; // two dimensional grid we will be using.
+	int length; // lengthxlength grid
+	ArrayList<Word> across; // the across words in the puzzle
+	ArrayList<Word> down; // the across words in the puzzle
+
+
+	public Grid(int length) { // creates an empty grid.
+		this.length = length;
+		grid = new Character[length][length];
+		for(int x = 0; x < length; x++) {
+			for(int y= 0; y <length; y++) {
+				grid[x][y] = '?';
+			}
+		}
+		down = new ArrayList<Word>();
+		across = new ArrayList<Word>();
+
+	}
+
+	private boolean checkValid(int x, int y) { // checks if a certain coordinate
+												// pair is valid.
+		if (x < length && y < length && 0 <= x && 0 <= y)
+			return true;
+		return false;
+	}
+
+	public void makeBlack(int x, int y) {
+		if (!checkValid(x, y)) { // if it isn't a valid coordinate system
+			System.out.println("invalid coordinates");
+			return;
+		}
+		// otherwise fill the space with 0.
+		grid[x][y] = '0';
+
+	}
+
+	public void insertChar(int x, int y, char c) { // inserts a character c into
+													// location x, y on the grid
+		if (!checkValid(x, y)) {
+			System.out.println("invalid coordinates");
+			return;
+
+		}
+		// otherwise fill it
+		grid[x][y] = c;
+	}
+	
+	public void replaceWord(Word newword, int direction) { //replaces a word of the same row and column and direction
+		if(direction == 1) {//across
+			for(Word w : across) {
+				if(w.row == newword.row && w.column == newword.column) { //if they're equal
+					across.remove(w);
+					across.add(newword);
+					for (int i = 0; i < newword.word.length(); i++) {
+						
+						insertChar(newword.row, newword.column + i, newword.word.charAt(i));
+					}
+					return; //immediately return to prevent concurrency error
+				}
+			}
+		}
+		if(direction == 2) {//down
+			for(Word w : down) {
+				if(w.row == newword.row && w.column == newword.column) { //if they're equal
+					down.remove(w);
+					down.add(newword);
+					for (int i = 0; i < newword.word.length(); i++) {
+						
+						insertChar(newword.row+i, newword.column, newword.word.charAt(i));
+					}
+					return; //immediately return to prevent concurrency error
+				}
+			}
+			
+			
+		}
+		System.out.println("Replacement failed; word doesn't exist at that location");
+	}
+
+	public void insertStringDown(int row, int col, String str) {
+		// inserts String vertically
+		if (!checkValid(row, col)) {
+			System.out.println("invalid coordinates");
+			return;
+
+		}
+
+		if ((length - row) < str.length()) {
+			// if the String is too big to fit in the grid
+			System.out
+					.println("Invalid String: too large to fit in specified area");
+			return;
+		}
+
+		// otherwise we can begin filling
+		Word newword = new Word(str, 2, row, col, str.length());
+		this.replaceWord(newword, 2);
+		this.updateWords();
+
+
+	}
+	
+	
+
+	public void insertStringAcross(int row, int col, String str) {
+		// inserts String horizontally
+		if (!checkValid(row, col)) {
+			System.out.println("invalid coordinates");
+			return;
+
+		}
+
+		if ((length - col) < str.length()) {
+			// if the String is too big to fit in the grid
+			System.out
+					.println("Invalid String: too large to fit in specified area");
+			return;
+		}
+
+		// otherwise we can begin filling
+		Word newword = new Word(str, 1, row, col, str.length());
+		this.replaceWord(newword, 1);
+		this.updateWords();
+
+
+	}
+
+	public void startGrid() { // adds blank Words to grid
+		
+		for (int row = 0; row < length; row++) {
+			for (int col = 0; col < length; col++) {
+				if (col == 0 || grid[row][col - 1] == 0 && (col != length-1)) { // if its the start
+															// of a word(aka if
+															// there's a black
+															// square to the
+															// left of it or if
+															// its on the edge
+					int wordlength = 0;
+					String word = "";
+					while ((col + wordlength) < length
+							&& !(grid[row][col + wordlength] == '0')) { //while we don't hit a black square or the edge
+						wordlength++;
+						word += "?";
+					}
+					if(wordlength>1) {
+					Word newword = new Word(word, 1, row, col, wordlength);
+					across.add(newword); 
+					}
+
+				}
+				
+				if(row == 0 || grid[row-1][col] == 0) {
+					int wordlength = 0;
+					String word = "";
+					while ((row+ wordlength) < length
+							&& !(grid[row + wordlength][col] == '0')) { //while we don't hit a black square or the edge
+						wordlength++;
+						word +=  "?";
+					}
+					if(wordlength>1) {
+					Word newword = new Word(word, 2, row, col, wordlength);
+					down.add(newword);
+					}
+				}
+			}
+
+		}
+
+	}
+	
+	
+	public void updateWords() {
+		for(Word w: this.across) {
+			String updatedword = "";
+
+			for(int x = 0; x < w.length; x++) {
+				updatedword += (char) grid[w.row][w.column+x];
+			}
+			w.word = updatedword;
+		}
+		for(Word w: this.down) {
+			String updatedword = "";
+
+			for(int x = 0; x < w.length; x++) {
+				updatedword += (char) grid[w.row+x][w.column];
+			}
+			w.word = updatedword;
+		}
+	}
+
+}

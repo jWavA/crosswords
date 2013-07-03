@@ -24,6 +24,13 @@ public class Word {// a word in the crossword
 	
 	} 
 	
+	public void reset() {
+		this.word = "";
+		for(int x= 0; x < length; x++) {
+			this.word += '?';
+		}
+	}
+	
 	
 
 }

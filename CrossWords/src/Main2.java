@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Main2 { // for testing
 	static Trie dictionary = new Trie();
@@ -29,7 +30,6 @@ public class Main2 { // for testing
 					wordlist[words] = currentword;
 					dictionary.insert(currentword);
 					words++;
-					// System.out.println(currentword);
 					currentword = "";
 
 				} else {
@@ -45,28 +45,30 @@ public class Main2 { // for testing
 		}
 
 		list = new Wordlist(wordlist);
-		Grid grid = new Grid(3);
-
+		Grid grid = new Grid(12);
+		for(int x = 0; x < 20; x++) {
+			grid.makeBlack((int)Math.random() * 120, (int)Math.random() * 120);
+		}
 		grid.startGrid();
 
-		solve(grid, 0, 1);
+		solve(grid, 1);
+		System.out.println("---------------");
 
+		grid.printGrid();
+		for(Word w: grid.down) {
+			System.out.println(w.word);
+		}
 		System.out.println(isSolved(grid));
-
+		
 	}
 
-	private static Grid solve(Grid grid, int index, int direction) { // 1 for
+	private static Grid solve(Grid grid, int direction) { // 1 for
 																		// across,
 																		// 2
 		// for down. Alternates between the two directions so that it does 1
 		// across, 1 down, 2 across, 2 down, etc.
 		System.out.println("---------------");
-		for (int x = 0; x < 3; x++) {
-			for (int y = 0; y < 3; y++) {
-				System.out.print(grid.grid[x][y] + " ");
-			}
-			System.out.println("\n");
-		}
+		grid.printGrid();
 		if (direction == 1) {
 
 			while (!isSolved(grid)) {
@@ -76,11 +78,8 @@ public class Main2 { // for testing
 						continue;
 					} else {
 
-						String findword = list.findWord(word.word, index);
-						index++;
-						if(index > 10000) {
-							index = 0;
-						}
+						String findword = list.findWord(word.word);
+						
 						if (findword == null) {
 							return null;
 
@@ -93,13 +92,10 @@ public class Main2 { // for testing
 									findword);
 							try {
 
-								Grid solution = solve(grid, index, 2);
-								if (solution == null) {
-									word.word = "???";
-									for(int x = word.column; x < word.length; x++) {
-										grid.grid[word.row][x] = '?';
-									}
-									return solve(grid, index, 1);
+								Grid solution = solve(grid, 2);
+								while (solution == null) {
+									grid.deleteLastWord();
+									solution= solve(grid, 1);
 
 								}
 								return solution;
@@ -122,24 +118,18 @@ public class Main2 { // for testing
 					if (dictionary.search(word.word)) {
 						continue;
 					} else {
-						String findword = list.findWord(word.word, index);
-						index++;
-						if(index > 10000) {
-							index = 0;
-						}
+						String findword = list.findWord(word.word);
+						
 						if (findword == null) {
 							return null;
 						} else {
 							grid.insertStringDown(word.row, word.column,
 									findword);
 							try {
-								Grid solution = solve(grid, index, 1);
-								if (solution == null) {
-									word.word = "???";
-									for(int x = word.row; x < word.length; x++) {
-										grid.grid[x][word.column] = '?';
-									}
-									return solve(grid, index, 2);
+								Grid solution = solve(grid, 1);
+								while (solution == null) {
+									grid.deleteLastWord();
+									solution= solve(grid, 1);
 								}
 								return solution;
 							} catch (Exception e) {
@@ -161,6 +151,7 @@ public class Main2 { // for testing
 	public static boolean isSolved(Grid grid) { // checks if every word is
 												// solved
 		for (Word word : grid.across) {
+			
 			if (!dictionary.search(word.word)) {
 				return false;
 			}

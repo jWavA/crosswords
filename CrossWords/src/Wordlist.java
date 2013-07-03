@@ -4,20 +4,17 @@ public class Wordlist {
 	String[][] words; // two dimensional array so we can organize the wordlist
 						// by length. Row will be the length, which organizes
 						// the columns to be the words
-	int[] indices; // tracks which words have been used already
 	
-	
+	ArrayList<String> used;
 
 	String[] wordlist;
 
 	public Wordlist(String[] word) {
 		words = new String[28][];
 		wordlist = word;
+		this.used = new ArrayList<String>();
 		this.loadWords();
-		indices = new int[28];
-		for (int i = 0; i < 28; i++) {
-			indices[i] = 0;// start them all at 0.
-		}
+		
 
 	}
 
@@ -45,49 +42,45 @@ public class Wordlist {
 		for (int x = 0; x < 28; x++) { // for every list of strings, after the
 										// words have been loaded, put it into a
 										// new two dimensional array
+			
 			this.words[x] = word.get(x).toArray(new String[0]);
+			
+			
 
 		}
 
 	}
 
-	public String nextWord(int length) { // returns the next unused word of
-											// length length
-		if (words[length - 1].length <= indices[length - 1]) { // if there
-																// aren't any
-																// more words
-			System.out.println("No more words of this length");
-			return "";
-		}
-		return words[length - 1][indices[length - 1]++];
-	}
-
-	public String findWord(String match, int index) { // find the indexth word that matches the
+	public String findWord(String match) { // find the indexth word that matches
+											// the
 											// incident string, where '?'
 											// represents an unknown letter.
 											// For example, ?PPL? would match
 											// APPLE
 
+		
 		boolean found = true;
-		for (String str : this.words[match.length() - 1]) {
+		for (int s = 0; s < this.words[match.length() - 1].length; s++) {
+			String str = this.words[match.length() - 1][s];
 			for (int x = 0; x < match.length(); x++) {
 				if (match.charAt(x) == '?') {
+
 					continue;
 				}
 				if (match.charAt(x) != str.charAt(x)) {
 					found = false;
 					break;
 				}
-				
+
 			}
+	
 			if (found) {
-				if(index == 0) {
-			
-			
-				return str;
+				if(this.used.contains(str)) {
+					continue;
 				}
-				else {
-					index--;
+				else{
+					this.used.add(str);
+					return str;
 				}
 			}
 			found = true;
